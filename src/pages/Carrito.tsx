@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
+import { LazyMotion, domAnimation, m, AnimatePresence, Variants } from "framer-motion";
 import { useCart } from "@/providers/CartProvider";
 
 const formatPrice = (amount: number, currency = "EUR") =>
   new Intl.NumberFormat("es-ES", { style: "currency", currency }).format(amount);
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 16 },
-  visible: (i = 0) => ({
+  visible: (i: number = 0) => ({
     opacity: 1,
     y: 0,
     transition: { duration: 0.35, ease: "easeOut", delay: i * 0.06 },

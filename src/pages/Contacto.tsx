@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -49,11 +49,12 @@ export default function Contacto() {
   };
 
   return (
+    <LazyMotion features={domAnimation}>
     <main className="min-h-screen">
 
       {/* ── Hero ── */}
       <section className="px-6 pt-32 pb-16 max-w-2xl mx-auto">
-        <motion.p
+        <m.p
           variants={fadeUp}
           initial="hidden"
           animate="visible"
@@ -61,8 +62,8 @@ export default function Contacto() {
           className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-6"
         >
           Contacto
-        </motion.p>
-        <motion.h1
+        </m.p>
+        <m.h1
           variants={fadeUp}
           initial="hidden"
           animate="visible"
@@ -70,8 +71,8 @@ export default function Contacto() {
           className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-6"
         >
           Hablemos.
-        </motion.h1>
-        <motion.p
+        </m.h1>
+        <m.p
           variants={fadeUp}
           initial="hidden"
           animate="visible"
@@ -80,7 +81,7 @@ export default function Contacto() {
         >
           ¿Tienes alguna pregunta sobre un pedido, un producto o simplemente
           quieres saludarnos? Escríbenos y te respondemos en menos de 24 horas.
-        </motion.p>
+        </m.p>
       </section>
 
       <div className="w-full h-px bg-border" />
@@ -91,7 +92,7 @@ export default function Contacto() {
         {/* Bloque de información */}
         <div className="space-y-10">
           {infoBlocks.map((block, i) => (
-            <motion.div
+            <m.div
               key={block.label}
               variants={slideLeft}
               initial="hidden"
@@ -114,12 +115,12 @@ export default function Contacto() {
                   {block.content}
                 </p>
               )}
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
         {/* Formulario */}
-        <motion.div
+        <m.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -127,7 +128,7 @@ export default function Contacto() {
           custom={0}
         >
           {sent ? (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
@@ -140,14 +141,14 @@ export default function Contacto() {
                 Gracias por escribirnos.<br />
                 Te respondemos pronto.
               </p>
-            </motion.div>
+            </m.div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               {[
                 { name: "name", label: "Nombre", type: "text", placeholder: "Tu nombre" },
                 { name: "email", label: "Email", type: "email", placeholder: "tu@email.com" },
               ].map((field, i) => (
-                <motion.div
+                <m.div
                   key={field.name}
                   variants={fadeUp}
                   initial="hidden"
@@ -168,10 +169,10 @@ export default function Contacto() {
                                focus:border-foreground transition-colors placeholder:text-muted-foreground/50"
                     placeholder={field.placeholder}
                   />
-                </motion.div>
+                </m.div>
               ))}
 
-              <motion.div
+              <m.div
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
@@ -191,9 +192,9 @@ export default function Contacto() {
                              focus:border-foreground transition-colors placeholder:text-muted-foreground/50 resize-none"
                   placeholder="¿En qué podemos ayudarte?"
                 />
-              </motion.div>
+              </m.div>
 
-              <motion.div
+              <m.div
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
@@ -207,17 +208,17 @@ export default function Contacto() {
                 >
                   Enviar mensaje
                 </button>
-              </motion.div>
+              </m.div>
             </form>
           )}
-        </motion.div>
+        </m.div>
       </div>
 
       <div className="w-full h-px bg-border" />
 
       {/* ── Mapa (mock Google Maps embed) ── */}
       <section className="px-6 py-16 max-w-4xl mx-auto">
-        <motion.div
+        <m.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -230,9 +231,9 @@ export default function Contacto() {
           <p className="text-sm text-muted-foreground">
             Calle Industria, 42 · 28001 Madrid, España
           </p>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -251,9 +252,10 @@ export default function Contacto() {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
-        </motion.div>
+        </m.div>
       </section>
 
     </main>
+    </LazyMotion>
   );
 }

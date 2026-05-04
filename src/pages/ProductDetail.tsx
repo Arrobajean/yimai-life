@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
+import { useCart } from "@/providers/CartProvider";
+import { Product } from "@/types/product";
 
 // ─── Mock data (mismo dataset que Catalogo) ────────────────────────────────────
 const MOCK_PRODUCTS = [
@@ -279,11 +281,34 @@ export default function ProductDetail() {
   const { handle } = useParams<{ handle: string }>();
   const product = MOCK_PRODUCTS.find((p) => p.handle === handle);
 
+  const { addToCart } = useCart();
   const [selectedVariant, setSelectedVariant] = useState(0);
   const [qty, setQty] = useState(1);
   const [toastVisible, setToastVisible] = useState(false);
 
   const handleAddToCart = () => {
+    if (!product) return;
+
+    const variantTitle = product.variants?.[selectedVariant] || "Default Title";
+    const productId = `${product.handle}-${selectedVariant}`;
+
+    const productItem: Product = {
+      id: productId,
+      title: product.title,
+      price: parseFloat(product.priceRange.minVariantPrice.amount),
+      description: product.description,
+      image: product.images[0]?.url || "",
+      category: product.collection,
+      inStock: true,
+      features: product.features,
+      variant: {
+        id: productId,
+        title: variantTitle,
+        price: parseFloat(product.priceRange.minVariantPrice.amount),
+      }
+    };
+
+    addToCart(productItem, qty);
     setToastVisible(true);
     setTimeout(() => setToastVisible(false), 2500);
   };
