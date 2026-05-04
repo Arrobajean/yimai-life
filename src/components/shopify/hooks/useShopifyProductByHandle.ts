@@ -60,6 +60,7 @@ export const useShopifyProductByHandle = (
 
   useEffect(() => {
     fetchProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handle]);
 
   const refetch = () => {

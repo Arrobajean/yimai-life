@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "Bash(node -e ' *)",
+      "Bash(where pdftotext *)",
+      "Bash(where gs *)",
+      "Bash(where mutool *)",
+      "Bash(pip list *)",
+      "Bash(findstr -i pdf)",
+      "Bash(pdftotext \"C:\\\\Users\\\\jeanc\\\\OneDrive\\\\Documentos\\\\Workspace\\\\yimailife\\\\documentos\\\\B. catalogo a4 单页 sin precio.pdf\" -)"
+    ]
+  }
+}

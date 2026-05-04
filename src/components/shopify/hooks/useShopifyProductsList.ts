@@ -1,72 +1,69 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import {
   shopifyQuery,
   PRODUCTS_QUERY,
+  COLLECTION_BY_HANDLE_QUERY,
   type ShopifyProduct,
 } from "@/services/shopify";
 
-// Tipo para la respuesta de la query de productos
 interface ProductsResponse {
-  products: {
-    edges: Array<{
-      node: ShopifyProduct;
-    }>;
-  };
+  products: { edges: Array<{ node: ShopifyProduct }> };
+}
+
+interface CollectionProductsResponse {
+  collection: {
+    products: { edges: Array<{ node: ShopifyProduct }> };
+  } | null;
 }
 
 interface UseShopifyProductsListReturn {
   products: ShopifyProduct[];
   loading: boolean;
   error: string | null;
-  refetch: () => void;
 }
 
 export const useShopifyProductsList = (
-  options: { first?: number } = {}
+  options: { first?: number; collectionHandle?: string | null } = {}
 ): UseShopifyProductsListReturn => {
-  const { first = 20 } = options;
-  const [products, setProducts] = useState<ShopifyProduct[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { first = 24, collectionHandle } = options;
 
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
-      setError(null);
+  const allProductsQuery = useQuery({
+    queryKey: ["shopify-products", first],
+    queryFn: () =>
+      shopifyQuery<ProductsResponse>(PRODUCTS_QUERY, { first, query: undefined }),
+    enabled: !collectionHandle,
+    staleTime: 5 * 60 * 1000,
+  });
 
-      const data = await shopifyQuery<ProductsResponse>(PRODUCTS_QUERY, {
+  const collectionQuery = useQuery({
+    queryKey: ["shopify-collection-products", collectionHandle, first],
+    queryFn: () =>
+      shopifyQuery<CollectionProductsResponse>(COLLECTION_BY_HANDLE_QUERY, {
+        handle: collectionHandle,
         first,
-        query: undefined, // Sin filtros para obtener todos los productos
-      });
+      }),
+    enabled: !!collectionHandle,
+    staleTime: 5 * 60 * 1000,
+  });
 
-      if (data.products?.edges) {
-        const shopifyProducts = data.products.edges.map((edge) => edge.node);
-        setProducts(shopifyProducts);
-      } else {
-        setProducts([]);
-      }
-    } catch (err) {
-      console.error("Error fetching Shopify products:", err);
-      setError(
-        err instanceof Error ? err.message : "Error al cargar productos"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, [first]);
-
-  const refetch = () => {
-    fetchProducts();
-  };
+  if (collectionHandle) {
+    return {
+      products:
+        collectionQuery.data?.collection?.products?.edges?.map((e) => e.node) ??
+        [],
+      loading: collectionQuery.isLoading,
+      error: collectionQuery.error
+        ? (collectionQuery.error as Error).message
+        : null,
+    };
+  }
 
   return {
-    products,
-    loading,
-    error,
-    refetch,
+    products:
+      allProductsQuery.data?.products?.edges?.map((e) => e.node) ?? [],
+    loading: allProductsQuery.isLoading,
+    error: allProductsQuery.error
+      ? (allProductsQuery.error as Error).message
+      : null,
   };
 };

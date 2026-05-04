@@ -148,7 +148,7 @@ export interface ProductFilters {
   tags?: string[];
 }
 
-import { ShopifySortKey } from "@/app/services/shopify/sort-keys";
+import { ShopifySortKey } from "@/services/shopify/sort-keys";
 
 export interface SortOptions {
   key: ShopifySortKey;

@@ -21,7 +21,7 @@ export const validateShopifyConfig = (
   }
 
   // Validar que el access token esté presente
-  if (!shopifyConfig.accessToken || shopifyConfig.accessToken.trim() === "") {
+  if (!shopifyConfig.storefrontAccessToken || shopifyConfig.storefrontAccessToken.trim() === "") {
     errors.push("Access token is required");
   }
 
