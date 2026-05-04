@@ -1,48 +1,193 @@
-import { useState } from "react"
-import { useShopifyProductsList } from "@/components/shopify/hooks/useShopifyProductsList"
-import { useShopifyCollections } from "@/components/shopify/hooks/useShopifyCollections"
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import { m, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
+import { ProductCard } from "@/components/shopify/cards/ProductCard";
+import { useCart } from "@/providers/CartProvider";
+import { Product } from "@/types/product";
+
+// ─── Mock data ────────────────────────────────────────────────────────────────
+
+const MOCK_COLLECTIONS = [
+  { handle: "envases-alimentarios", title: "Envases Alimentarios" },
+  { handle: "biodegradables", title: "Biodegradables" },
+  { handle: "personalizados", title: "Personalizados" },
+];
+
+const MOCK_PRODUCTS = [
+  {
+    handle: "caja-kraft-biodegradable",
+    title: "Caja Kraft Biodegradable",
+    collection: "biodegradables",
+    images: { edges: [{ node: { url: "", altText: "Caja Kraft" } }] },
+    priceRange: { minVariantPrice: { amount: "0.45", currencyCode: "EUR" } },
+  },
+  {
+    handle: "contenedor-hermetico-500ml",
+    title: "Contenedor Hermético 500 ml",
+    collection: "envases-alimentarios",
+    images: { edges: [{ node: { url: "", altText: "Contenedor hermético" } }] },
+    priceRange: { minVariantPrice: { amount: "0.89", currencyCode: "EUR" } },
+  },
+  {
+    handle: "bandeja-compostable-l",
+    title: "Bandeja Compostable L",
+    collection: "biodegradables",
+    images: { edges: [{ node: { url: "", altText: "Bandeja compostable" } }] },
+    priceRange: { minVariantPrice: { amount: "0.62", currencyCode: "EUR" } },
+  },
+  {
+    handle: "vaso-papel-250ml",
+    title: "Vaso de Papel 250 ml",
+    collection: "envases-alimentarios",
+    images: { edges: [{ node: { url: "", altText: "Vaso de papel" } }] },
+    priceRange: { minVariantPrice: { amount: "0.18", currencyCode: "EUR" } },
+  },
+  {
+    handle: "caja-personalizada-logo",
+    title: "Caja con Logo Personalizado",
+    collection: "personalizados",
+    images: { edges: [{ node: { url: "", altText: "Caja personalizada" } }] },
+    priceRange: { minVariantPrice: { amount: "1.20", currencyCode: "EUR" } },
+  },
+  {
+    handle: "tapa-transparente-universal",
+    title: "Tapa Transparente Universal",
+    collection: "envases-alimentarios",
+    images: { edges: [{ node: { url: "", altText: "Tapa transparente" } }] },
+    priceRange: { minVariantPrice: { amount: "0.22", currencyCode: "EUR" } },
+  },
+  {
+    handle: "bolsa-papel-asas",
+    title: "Bolsa de Papel con Asas",
+    collection: "personalizados",
+    images: { edges: [{ node: { url: "", altText: "Bolsa de papel" } }] },
+    priceRange: { minVariantPrice: { amount: "0.35", currencyCode: "EUR" } },
+  },
+  {
+    handle: "contenedor-kraft-750ml",
+    title: "Contenedor Kraft 750 ml",
+    collection: "biodegradables",
+    images: { edges: [{ node: { url: "", altText: "Contenedor kraft" } }] },
+    priceRange: { minVariantPrice: { amount: "0.78", currencyCode: "EUR" } },
+  },
+  {
+    handle: "bandeja-aluminio-rectangular",
+    title: "Bandeja Aluminio Rectangular",
+    collection: "envases-alimentarios",
+    images: { edges: [{ node: { url: "", altText: "Bandeja aluminio" } }] },
+    priceRange: { minVariantPrice: { amount: "0.55", currencyCode: "EUR" } },
+  },
+  {
+    handle: "etiqueta-personalizada",
+    title: "Etiqueta Personalizada",
+    collection: "personalizados",
+    images: { edges: [{ node: { url: "", altText: "Etiqueta personalizada" } }] },
+    priceRange: { minVariantPrice: { amount: "0.08", currencyCode: "EUR" } },
+  },
+  {
+    handle: "vaso-biodegradable-cafe",
+    title: "Vaso Biodegradable para Café",
+    collection: "biodegradables",
+    images: { edges: [{ node: { url: "", altText: "Vaso biodegradable" } }] },
+    priceRange: { minVariantPrice: { amount: "0.24", currencyCode: "EUR" } },
+  },
+  {
+    handle: "caja-pizza-kraft",
+    title: "Caja Pizza Kraft",
+    collection: "biodegradables",
+    images: { edges: [{ node: { url: "", altText: "Caja pizza kraft" } }] },
+    priceRange: { minVariantPrice: { amount: "0.95", currencyCode: "EUR" } },
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+
+const gridVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.06 } },
+};
+
+// Toast de confirmación
+function Toast({ visible }: { visible: boolean }) {
+  return (
+    <AnimatePresence>
+      {visible && (
+        <m.div
+          key="toast-catalogo"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 24 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-foreground text-background
+                     text-xs tracking-[0.1em] uppercase px-6 py-3 whitespace-nowrap"
+        >
+          Añadido al carrito ✓
+        </m.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 export default function Catalogo() {
-  const [activeCollection, setActiveCollection] = useState<string | null>(null)
+  const { addToCart } = useCart();
+  const [activeCollection, setActiveCollection] = useState<string | null>(null);
+  const [toastVisible, setToastVisible] = useState(false);
 
-  const { collections, loading: loadingCollections } = useShopifyCollections({ first: 10 })
-  const { products, loading: loadingProducts } = useShopifyProductsList({
-    first: 24,
-    collectionHandle: activeCollection || undefined,
-  })
+  const filteredProducts = activeCollection
+    ? MOCK_PRODUCTS.filter((p) => p.collection === activeCollection)
+    : MOCK_PRODUCTS;
+
+  const handleAddToCart = (handle: string) => {
+    const raw = MOCK_PRODUCTS.find((p) => p.handle === handle);
+    if (!raw) return;
+
+    const product: Product = {
+      id: raw.handle,
+      title: raw.title,
+      price: parseFloat(raw.priceRange.minVariantPrice.amount),
+      description: "",
+      image: raw.images.edges[0]?.node.url || "",
+      category: raw.collection,
+      inStock: true,
+    };
+
+    addToCart(product, 1);
+    setToastVisible(true);
+    setTimeout(() => setToastVisible(false), 2500);
+  };
 
   return (
-    <main className="min-h-screen">
-      {/* Header */}
-      <section className="px-6 pt-32 pb-12 max-w-5xl mx-auto">
-        <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4">
-          Catálogo
-        </p>
-        <h1 className="text-4xl md:text-5xl font-light tracking-tight">
-          Todos los productos
-        </h1>
-      </section>
+    <LazyMotion features={domAnimation}>
+      <Toast visible={toastVisible} />
 
-      {/* Filtros por colección */}
-      <section className="px-6 pb-10 max-w-5xl mx-auto">
-        <div className="flex flex-wrap gap-3">
-          <button
-            onClick={() => setActiveCollection(null)}
-            className={`text-xs tracking-[0.12em] uppercase px-4 py-2 border transition-colors ${
-              activeCollection === null
-                ? "bg-foreground text-background border-foreground"
-                : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
-            }`}
-          >
-            Todo
-          </button>
-          {!loadingCollections &&
-            collections?.map((col: { handle: string; title: string }) => (
+      <main className="min-h-screen">
+        <section className="px-6 pt-32 pb-10 max-w-7xl mx-auto">
+          <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4">
+            Catálogo
+          </p>
+          <h1 className="text-4xl md:text-5xl font-light tracking-tight">
+            Todos los productos
+          </h1>
+        </section>
+
+        {/* Filtros por colección */}
+        <section className="px-6 pb-8 max-w-7xl mx-auto">
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setActiveCollection(null)}
+              className={`text-xs tracking-[0.1em] uppercase px-4 py-2 border transition-colors duration-200 ${
+                activeCollection === null
+                  ? "bg-foreground text-background border-foreground"
+                  : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
+              }`}
+            >
+              Todo
+            </button>
+
+            {MOCK_COLLECTIONS.map((col) => (
               <button
                 key={col.handle}
                 onClick={() => setActiveCollection(col.handle)}
-                className={`text-xs tracking-[0.12em] uppercase px-4 py-2 border transition-colors ${
+                className={`text-xs tracking-[0.1em] uppercase px-4 py-2 border transition-colors duration-200 ${
                   activeCollection === col.handle
                     ? "bg-foreground text-background border-foreground"
                     : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
@@ -51,68 +196,40 @@ export default function Catalogo() {
                 {col.title}
               </button>
             ))}
-        </div>
-      </section>
-
-      {/* Separador */}
-      <div className="w-full h-px bg-border" />
-
-      {/* Grid de productos */}
-      <section className="px-6 py-12 max-w-5xl mx-auto">
-        {loadingProducts ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="space-y-3">
-                <div className="aspect-square bg-muted animate-pulse" />
-                <div className="h-3 bg-muted animate-pulse w-3/4" />
-                <div className="h-3 bg-muted animate-pulse w-1/3" />
-              </div>
-            ))}
           </div>
-        ) : products && products.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {products.map((product: {
-              handle: string;
-              images: { edges: Array<{ node: { url: string; altText: string | null } }> };
-              title: string;
-              priceRange: { minVariantPrice: { amount: string; currencyCode: string } };
-            }) => {
-              const image = product.images.edges[0]?.node
-              const price = product.priceRange.minVariantPrice
-              const formatted = new Intl.NumberFormat("es-ES", {
-                style: "currency",
-                currency: price.currencyCode,
-              }).format(parseFloat(price.amount))
+        </section>
 
-              return (
-                <Link
-                  key={product.handle}
-                  to={`/product/${product.handle}`}
-                  className="group block"
-                >
-                  <div className="aspect-square overflow-hidden bg-secondary mb-3">
-                    {image ? (
-                      <img
-                        src={image.url}
-                        alt={image.altText || product.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-muted" />
-                    )}
-                  </div>
-                  <p className="text-sm font-medium truncate">{product.title}</p>
-                  <p className="text-sm text-muted-foreground mt-1">{formatted}</p>
-                </Link>
-              )
-            })}
-          </div>
-        ) : (
-          <div className="py-24 text-center">
-            <p className="text-muted-foreground text-sm">No hay productos disponibles.</p>
-          </div>
-        )}
-      </section>
-    </main>
-  )
+        <div className="w-full h-px bg-border" />
+
+        {/* Grid de productos – responsive: 2 / 3 / 4 / 5 columnas */}
+        <section className="px-6 py-12 max-w-7xl mx-auto">
+          <AnimatePresence mode="wait">
+            <m.div
+              key={activeCollection ?? "all"}
+              variants={gridVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-5 gap-y-10"
+            >
+              {filteredProducts.map((product) => {
+                const image = product.images.edges[0]?.node;
+                return (
+                  <ProductCard
+                    key={product.handle}
+                    handle={product.handle}
+                    title={product.title}
+                    imageUrl={image?.url || undefined}
+                    imageAlt={image?.altText ?? undefined}
+                    price={product.priceRange.minVariantPrice}
+                    onAddToCart={handleAddToCart}
+                  />
+                );
+              })}
+            </m.div>
+          </AnimatePresence>
+        </section>
+      </main>
+    </LazyMotion>
+  );
 }

@@ -19,7 +19,7 @@ class ShopifyDiagnostics {
   constructor() {
     this.config = {
       storeDomain:
-        import.meta.env.VITE_SHOPIFY_STORE_DOMAIN || "ohannausa.myshopify.com",
+        import.meta.env.VITE_SHOPIFY_STORE_DOMAIN || "",
       storefrontAccessToken:
         import.meta.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN || "",
       apiVersion: import.meta.env.VITE_SHOPIFY_API_VERSION || "2024-10",

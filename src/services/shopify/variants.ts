@@ -3,7 +3,7 @@
  * Basado en la documentación oficial: https://shopify.dev/docs/api/storefront/latest/objects/productvariant
  */
 
-import { ShopifyProduct } from "@/app/services/shopify/types";
+import { ShopifyProduct } from "@/services/shopify/types";
 
 // Tipos de datos para variantes
 export interface ProductVariant {
