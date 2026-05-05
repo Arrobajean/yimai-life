@@ -1,112 +1,112 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { m, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import { ProductCard } from "@/components/shopify/cards/ProductCard";
 import { useCart } from "@/providers/CartProvider";
 import { Product } from "@/types/product";
-
-// ─── Mock data ────────────────────────────────────────────────────────────────
+import { fadeUp } from "@/lib/motion";
 
 const MOCK_COLLECTIONS = [
-  { handle: "envases-alimentarios", title: "Envases Alimentarios" },
-  { handle: "biodegradables", title: "Biodegradables" },
-  { handle: "personalizados", title: "Personalizados" },
+  { handle: "kraft-takeaway",    title: "Kraft & Takeaway" },
+  { handle: "sushi-catering",    title: "Sushi & Catering" },
+  { handle: "plastico-aluminio", title: "Plástico & Aluminio" },
+  { handle: "accesorios",        title: "Accesorios" },
+  { handle: "personalizacion",   title: "Personalización" },
 ];
 
 const MOCK_PRODUCTS = [
   {
     handle: "caja-kraft-biodegradable",
     title: "Caja Kraft Biodegradable",
-    collection: "biodegradables",
+    collection: "kraft-takeaway",
     images: { edges: [{ node: { url: "", altText: "Caja Kraft" } }] },
     priceRange: { minVariantPrice: { amount: "0.45", currencyCode: "EUR" } },
   },
   {
     handle: "contenedor-hermetico-500ml",
     title: "Contenedor Hermético 500 ml",
-    collection: "envases-alimentarios",
+    collection: "plastico-aluminio",
     images: { edges: [{ node: { url: "", altText: "Contenedor hermético" } }] },
     priceRange: { minVariantPrice: { amount: "0.89", currencyCode: "EUR" } },
   },
   {
     handle: "bandeja-compostable-l",
     title: "Bandeja Compostable L",
-    collection: "biodegradables",
+    collection: "sushi-catering",
     images: { edges: [{ node: { url: "", altText: "Bandeja compostable" } }] },
     priceRange: { minVariantPrice: { amount: "0.62", currencyCode: "EUR" } },
   },
   {
     handle: "vaso-papel-250ml",
     title: "Vaso de Papel 250 ml",
-    collection: "envases-alimentarios",
+    collection: "accesorios",
     images: { edges: [{ node: { url: "", altText: "Vaso de papel" } }] },
     priceRange: { minVariantPrice: { amount: "0.18", currencyCode: "EUR" } },
   },
   {
     handle: "caja-personalizada-logo",
     title: "Caja con Logo Personalizado",
-    collection: "personalizados",
+    collection: "personalizacion",
     images: { edges: [{ node: { url: "", altText: "Caja personalizada" } }] },
     priceRange: { minVariantPrice: { amount: "1.20", currencyCode: "EUR" } },
   },
   {
     handle: "tapa-transparente-universal",
     title: "Tapa Transparente Universal",
-    collection: "envases-alimentarios",
+    collection: "plastico-aluminio",
     images: { edges: [{ node: { url: "", altText: "Tapa transparente" } }] },
     priceRange: { minVariantPrice: { amount: "0.22", currencyCode: "EUR" } },
   },
   {
     handle: "bolsa-papel-asas",
     title: "Bolsa de Papel con Asas",
-    collection: "personalizados",
+    collection: "personalizacion",
     images: { edges: [{ node: { url: "", altText: "Bolsa de papel" } }] },
     priceRange: { minVariantPrice: { amount: "0.35", currencyCode: "EUR" } },
   },
   {
     handle: "contenedor-kraft-750ml",
     title: "Contenedor Kraft 750 ml",
-    collection: "biodegradables",
+    collection: "kraft-takeaway",
     images: { edges: [{ node: { url: "", altText: "Contenedor kraft" } }] },
     priceRange: { minVariantPrice: { amount: "0.78", currencyCode: "EUR" } },
   },
   {
     handle: "bandeja-aluminio-rectangular",
     title: "Bandeja Aluminio Rectangular",
-    collection: "envases-alimentarios",
+    collection: "plastico-aluminio",
     images: { edges: [{ node: { url: "", altText: "Bandeja aluminio" } }] },
     priceRange: { minVariantPrice: { amount: "0.55", currencyCode: "EUR" } },
   },
   {
     handle: "etiqueta-personalizada",
     title: "Etiqueta Personalizada",
-    collection: "personalizados",
+    collection: "personalizacion",
     images: { edges: [{ node: { url: "", altText: "Etiqueta personalizada" } }] },
     priceRange: { minVariantPrice: { amount: "0.08", currencyCode: "EUR" } },
   },
   {
     handle: "vaso-biodegradable-cafe",
     title: "Vaso Biodegradable para Café",
-    collection: "biodegradables",
+    collection: "accesorios",
     images: { edges: [{ node: { url: "", altText: "Vaso biodegradable" } }] },
     priceRange: { minVariantPrice: { amount: "0.24", currencyCode: "EUR" } },
   },
   {
     handle: "caja-pizza-kraft",
     title: "Caja Pizza Kraft",
-    collection: "biodegradables",
+    collection: "kraft-takeaway",
     images: { edges: [{ node: { url: "", altText: "Caja pizza kraft" } }] },
     priceRange: { minVariantPrice: { amount: "0.95", currencyCode: "EUR" } },
   },
 ];
 
-// ─────────────────────────────────────────────────────────────────────────────
-
+// Fade for the grid container on collection switch
 const gridVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.06 } },
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.3, ease: "easeOut" } },
 };
 
-// Toast de confirmación
 function Toast({ visible }: { visible: boolean }) {
   return (
     <AnimatePresence>
@@ -129,7 +129,10 @@ function Toast({ visible }: { visible: boolean }) {
 
 export default function Catalogo() {
   const { addToCart } = useCart();
-  const [activeCollection, setActiveCollection] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const [activeCollection, setActiveCollection] = useState<string | null>(
+    searchParams.get("collection")
+  );
   const [toastVisible, setToastVisible] = useState(false);
 
   const filteredProducts = activeCollection
@@ -161,17 +164,35 @@ export default function Catalogo() {
 
       <main className="min-h-screen">
         <section className="px-6 pt-32 pb-10 max-w-7xl mx-auto">
-          <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4">
+          <m.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0}
+            className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4"
+          >
             Catálogo
-          </p>
-          <h1 className="text-4xl md:text-5xl font-light tracking-tight">
+          </m.p>
+          <m.h1
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.15}
+            className="text-4xl md:text-5xl font-light tracking-tight"
+          >
             Todos los productos
-          </h1>
+          </m.h1>
         </section>
 
         {/* Filtros por colección */}
         <section className="px-6 pb-8 max-w-7xl mx-auto">
-          <div className="flex flex-wrap gap-2">
+          <m.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.3}
+            className="flex flex-wrap gap-2"
+          >
             <button
               onClick={() => setActiveCollection(null)}
               className={`text-xs tracking-[0.1em] uppercase px-4 py-2 border transition-colors duration-200 ${
@@ -196,12 +217,12 @@ export default function Catalogo() {
                 {col.title}
               </button>
             ))}
-          </div>
+          </m.div>
         </section>
 
         <div className="w-full h-px bg-border" />
 
-        {/* Grid de productos – responsive: 2 / 3 / 4 / 5 columnas */}
+        {/* Grid de productos */}
         <section className="px-6 py-12 max-w-7xl mx-auto">
           <AnimatePresence mode="wait">
             <m.div

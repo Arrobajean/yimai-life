@@ -29,7 +29,7 @@ export default function App() {
           <Route path="/catalogo" element={<Catalogo />} />
           <Route path="/product/:handle" element={<ProductDetail />} />
           <Route path="/carrito" element={<Carrito />} />
-          <Route path="/quienes-somos" element={<QuienesSomos />} />
+          <Route path="/nosotros" element={<QuienesSomos />} />
           <Route path="/contacto" element={<Contacto />} />
         </Routes>
       </div>

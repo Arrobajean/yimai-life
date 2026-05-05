@@ -1,277 +1,253 @@
 import { LazyMotion, domAnimation, m } from "framer-motion";
+import { Leaf, ShieldCheck, Package, Users, Award, BadgeCheck, Palette } from "lucide-react";
+import { fadeUp, iconHover } from "@/lib/motion";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: "easeOut", delay: i * 0.1 },
-  }),
-};
+const pillars = [
+  {
+    icon: <Leaf className="w-6 h-6" />,
+    label: "Sostenibilidad",
+    text: "Comprometidos con el medio ambiente a través de materiales biodegradables y procesos ecológicos.",
+  },
+  {
+    icon: <ShieldCheck className="w-6 h-6" />,
+    label: "Calidad",
+    text: "Garantía de excelencia y seguridad alimentaria en cada uno de nuestros productos certificados.",
+  },
+  {
+    icon: <Users className="w-6 h-6" />,
+    label: "Soluciones Profesionales",
+    text: "Servicio experto y amplia variedad de productos diseñados para las necesidades de tu negocio.",
+  },
+  {
+    icon: <Package className="w-6 h-6" />,
+    label: "Personalización",
+    text: "Soluciones a medida adaptadas a las necesidades específicas de cada uno de nuestros clientes.",
+  },
+];
 
 const compromisos = [
   {
+    icon: <Users className="w-6 h-6" />,
     title: "Con Nuestros Clientes",
     body: "Aportar soluciones óptimas a sus necesidades de envasado desechable, protegiendo su producto y realzando las propiedades e imagen del mismo.",
   },
   {
+    icon: <Award className="w-6 h-6" />,
     title: "Con la Calidad",
     body: "Nuestro sistema de gestión de calidad está certificado con la ISO 9001.",
   },
   {
+    icon: <ShieldCheck className="w-6 h-6" />,
     title: "Con la Salud y la Seguridad",
-    body: "Todos los productos destinados a hostelería están certificados para su uso alimentario. En lo relativo a los procesos, la empresa está certificada con la ISO 45001, el estándar de prevención de riesgos laborales más alto que existe.",
+    body: "Todos los productos destinados a hostelería están certificados para su uso alimentario. En lo relativo a los procesos, la empresa está certificada con la ISO 45001.",
   },
   {
+    icon: <Leaf className="w-6 h-6" />,
     title: "Con el Medio Ambiente",
-    body: "La inmensa mayoría de nuestros productos son reciclables. También ofrecemos una amplia gama de artículos biodegradables y/o compostables. Contamos con la certificación de gestión ambiental ISO 14001.",
+    body: "La inmensa mayoría de nuestros productos son reciclables. También ofrecemos una amplia gama de artículos biodegradables y/o compostables.",
   },
   {
+    icon: <BadgeCheck className="w-6 h-6" />,
     title: "Productos Certificados",
-    body: "Nuestros productos han sido sometidos a pruebas de calidad conforme a los estándares de SGS y otras entidades internacionales, garantizando su seguridad y cumplimiento normativo.",
-  },
-];
-
-const valores = [
-  {
-    title: "Cliente en el centro",
-    body: "Con el fin de ofrecerle el mejor servicio en estos tiempos de incertidumbre.",
+    body: "Nuestros productos han sido sometidos a pruebas de calidad conforme a los estándares de SGS y otras entidades internacionales.",
   },
   {
-    title: "Innovación constante",
-    body: "Para aportar nuevas soluciones y procesos al mercado.",
-  },
-  {
-    title: "Asesoramiento experto",
-    body: "Con el objetivo de cubrir las necesidades y requerimientos de negocio de nuestros clientes.",
-  },
-  {
-    title: "Desarrollo sostenible",
-    body: "Tanto de productos como de prácticas que tengan un impacto positivo en la sociedad.",
-  },
-  {
+    icon: <Palette className="w-6 h-6" />,
     title: "Personalización",
-    body: "Como valor diferencial frente a la competencia.",
+    body: "Adaptamos nuestros envases a la identidad de tu marca. Desde el diseño gráfico hasta el acabado final, creamos soluciones de packaging que refuerzan tu imagen y conectan con tus clientes.",
   },
-];
-
-const productos = [
-  "Cajas para alimentos",
-  "Contenedores herméticos",
-  "Envases biodegradables y compostables",
-  "Soluciones de envasado personalizadas",
 ];
 
 export default function QuienesSomos() {
   return (
     <LazyMotion features={domAnimation}>
-    <main className="min-h-screen">
+      <main className="min-h-screen">
 
-      {/* ── Hero ── */}
-      <section className="px-6 pt-32 pb-24 max-w-2xl mx-auto">
-        <m.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0}
-          className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-6"
-        >
-          Sobre nosotros
-        </m.p>
-        <m.h1
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={1}
-          className="text-4xl md:text-5xl font-light leading-tight tracking-tight mb-8"
-        >
-          Innovación en Envases<br />para Alimentos
-        </m.h1>
-        <m.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={2}
-          className="text-muted-foreground leading-relaxed"
-        >
-          Fundada en 2015, YIMAILIFE se ha establecido como un líder destacado
-          en la industria de envases para alimentos. Desde nuestros inicios,
-          hemos dedicado nuestros esfuerzos a ofrecer soluciones innovadoras y
-          sostenibles para el envasado de alimentos, satisfaciendo las
-          necesidades de nuestros clientes en un mercado en constante evolución.
-        </m.p>
-      </section>
+        {/* ── Hero ── */}
+        <section className="px-6 pt-32 pb-24 max-w-3xl mx-auto text-center">
+          <m.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0}
+            className="text-xs tracking-[0.25em] uppercase text-muted-foreground mb-8"
+          >
+            Nosotros
+          </m.p>
+          <m.h1
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.15}
+            className="text-5xl md:text-6xl font-light leading-[1.1] tracking-tight mb-10"
+          >
+            Sobre Nosotros
+          </m.h1>
+          <m.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.3}
+            className="text-sm font-light leading-relaxed text-muted-foreground max-w-xl mx-auto"
+          >
+            Fundada en 2019, nuestra empresa se ha consolidado como un referente
+            en el sector de envases para alimentos, ofreciendo soluciones
+            innovadoras y sostenibles adaptadas a las necesidades del mercado actual.
+          </m.p>
+        </section>
 
-      <div className="w-full h-px bg-border" />
+        <div className="w-full h-px bg-border" />
 
-      {/* ── Misión ── */}
-      <section className="px-6 py-24 max-w-2xl mx-auto">
-        <m.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          custom={0}
-        >
-          <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4">
+        {/* ── Por qué elegirnos ── */}
+        <section className="px-6 py-28 max-w-5xl mx-auto text-center">
+          <m.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-16"
+          >
+            ¿Por qué elegirnos?
+          </m.p>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
+            {pillars.map((p, i) => (
+              <m.div
+                key={p.label}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                custom={i * 0.1}
+                className="flex flex-col items-center"
+              >
+                <m.div
+                  {...iconHover}
+                  className="mb-6 text-foreground/80 cursor-default"
+                >
+                  {p.icon}
+                </m.div>
+                <h3 className="text-sm font-medium mb-3 uppercase tracking-wider">{p.label}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed max-w-[200px]">{p.text}</p>
+              </m.div>
+            ))}
+          </div>
+        </section>
+
+        <div className="w-full h-px bg-border" />
+
+        {/* ── Misión ── */}
+        <section className="px-6 py-28 max-w-3xl mx-auto text-center">
+          <m.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-8"
+          >
             Nuestra misión
-          </p>
-          <p className="text-lg font-light leading-relaxed">
-            Proporcionar productos de alta calidad que no solo protejan y
-            preserven la frescura de los alimentos, sino que también sean
-            respetuosos con el medio ambiente. Lideramos con integridad,
-            sostenibilidad y un compromiso inquebrantable con la excelencia en
-            cada aspecto de nuestro negocio.
-          </p>
-        </m.div>
-      </section>
+          </m.p>
+          <m.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0.1}
+            className="text-2xl md:text-3xl font-light leading-relaxed"
+          >
+            Nuestra misión es proporcionar productos de alta calidad que
+            garanticen la conservación y seguridad de los alimentos, al mismo
+            tiempo que contribuimos a la protección del medio ambiente.
+          </m.p>
+        </section>
 
-      <div className="w-full h-px bg-border" />
+        <div className="w-full h-px bg-border" />
 
-      {/* ── Productos ── */}
-      <section className="px-6 py-24 max-w-4xl mx-auto">
-        <m.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          custom={0}
-          className="mb-12"
-        >
-          <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4">
-            Productos y Soluciones
-          </p>
-          <p className="text-muted-foreground leading-relaxed max-w-2xl">
-            Ofrecemos una amplia gama de envases para alimentos diseñados para
-            diferentes necesidades y aplicaciones. Nuestros productos están
-            diseñados para mantener la calidad y seguridad de los alimentos,
-            garantizando una experiencia satisfactoria para el consumidor final.
-          </p>
-        </m.div>
-
-        <div className="grid sm:grid-cols-2 gap-4">
-          {productos.map((item, i) => (
-            <m.div
-              key={item}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={i * 0.1}
-              className="border border-border px-6 py-5"
-            >
-              <p className="text-sm font-light">{item}</p>
-            </m.div>
-          ))}
-        </div>
-      </section>
-
-      <div className="w-full h-px bg-border" />
-
-      {/* ── Innovación y Sostenibilidad ── */}
-      <section className="px-6 py-24 max-w-2xl mx-auto">
-        <m.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4">
+        {/* ── Innovación ── */}
+        <section className="px-6 py-28 max-w-3xl mx-auto text-center">
+          <m.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-8"
+          >
             Innovación y Sostenibilidad
-          </p>
-          <p className="text-lg font-light leading-relaxed">
-            La innovación es el corazón de YIMAILIFE. Continuamente invertimos
-            en investigación y desarrollo para crear envases más eficientes,
-            funcionales y ecológicos. Nos comprometemos a reducir nuestro
-            impacto ambiental mediante el uso de materiales reciclables y el
-            desarrollo de soluciones de envasado biodegradables.
-          </p>
-        </m.div>
-      </section>
+          </m.p>
+          <m.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0.1}
+            className="text-2xl md:text-3xl font-light leading-relaxed"
+          >
+            Apostamos por la innovación constante y el desarrollo de envases más
+            eficientes, funcionales y ecológicos, manteniendo siempre un firme
+            compromiso con la calidad y la satisfacción de nuestros clientes.
+          </m.p>
+        </section>
 
-      <div className="w-full h-px bg-border" />
+        <div className="w-full h-px bg-border" />
 
-      {/* ── Compromisos ── */}
-      <section className="px-6 py-24 max-w-4xl mx-auto">
-        <m.p
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-12"
-        >
-          Nuestro Compromiso
-        </m.p>
+        {/* ── Compromisos ── */}
+        <section className="px-6 py-28 max-w-5xl mx-auto text-center">
+          <m.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-16"
+          >
+            Nuestro Compromiso
+          </m.p>
 
-        <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
-          {compromisos.map((c, i) => (
-            <m.div
-              key={c.title}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={i * 0.08}
-            >
-              <h3 className="text-sm font-medium mb-3">{c.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {c.body}
-              </p>
-            </m.div>
-          ))}
-        </div>
-      </section>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+            {compromisos.map((c, i) => (
+              <m.div
+                key={c.title}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                custom={i * 0.1}
+                className="flex flex-col items-center"
+              >
+                <m.div
+                  {...iconHover}
+                  className="mb-6 text-foreground/80 cursor-default"
+                >
+                  {c.icon}
+                </m.div>
+                <h3 className="text-sm font-medium mb-4">{c.title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed max-w-xs">{c.body}</p>
+              </m.div>
+            ))}
+          </div>
+        </section>
 
-      <div className="w-full h-px bg-border" />
+        <div className="w-full h-px bg-border" />
 
-      {/* ── Valores ── */}
-      <section className="px-6 py-24 max-w-4xl mx-auto">
-        <m.p
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-12"
-        >
-          Nuestros Valores
-        </m.p>
+        {/* ── Tagline Final ── */}
+        <section className="px-6 py-32 max-w-3xl mx-auto text-center">
+          <m.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            className="text-xl font-light leading-relaxed text-muted-foreground"
+          >
+            Tu Socio de Confianza en Envases para Alimentos,<br />
+            Comprometido con la Calidad y la Sostenibilidad.
+          </m.p>
+        </section>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-x-10 gap-y-10">
-          {valores.map((v, i) => (
-            <m.div
-              key={v.title}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={i * 0.08}
-            >
-              <h3 className="text-sm font-medium mb-3">{v.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {v.body}
-              </p>
-            </m.div>
-          ))}
-        </div>
-      </section>
-
-      <div className="w-full h-px bg-border" />
-
-      {/* ── Tagline ── */}
-      <section className="px-6 py-24 max-w-2xl mx-auto text-center">
-        <m.p
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="text-lg font-light leading-relaxed text-muted-foreground"
-        >
-          Tu Socio de Confianza en Envases para Alimentos,<br />
-          Comprometido con la Calidad y la Sostenibilidad.
-        </m.p>
-      </section>
-
-    </main>
+      </main>
     </LazyMotion>
   );
 }

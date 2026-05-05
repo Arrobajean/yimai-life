@@ -5,7 +5,7 @@ import { useCart } from "@/providers/CartProvider";
 
 const navLinks = [
   { to: "/catalogo", label: "Catálogo" },
-  { to: "/quienes-somos", label: "Quiénes somos" },
+  { to: "/nosotros", label: "Nosotros" },
   { to: "/contacto", label: "Contacto" },
 ];
 

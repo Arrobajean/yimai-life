@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const navLinks = [
   { to: "/catalogo", label: "Catálogo" },
-  { to: "/quienes-somos", label: "Quiénes somos" },
+  { to: "/nosotros", label: "Nosotros" },
   { to: "/contacto", label: "Contacto" },
 ];
 
@@ -81,8 +81,8 @@ export default function Footer() {
 
       {/* ── Barra inferior ── */}
       <div className="border-t border-border">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
-          <p className="text-xs text-muted-foreground">
+        <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col items-center gap-3 text-center">
+          <p className="text-xs text-muted-foreground tracking-wide">
             © {currentYear} Yimai Life. Todos los derechos reservados.
           </p>
           <p className="text-xs text-muted-foreground/50">
@@ -91,7 +91,7 @@ export default function Footer() {
               href="https://www.404studios.digital"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-muted-foreground transition-colors duration-200"
+              className="hover:text-foreground transition-colors duration-200"
             >
               404studios
             </a>

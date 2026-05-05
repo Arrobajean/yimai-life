@@ -1,29 +1,17 @@
 import { useState } from "react";
 import { LazyMotion, domAnimation, m } from "framer-motion";
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: "easeOut", delay: i * 0.1 },
-  }),
-};
-
-const slideLeft = {
-  hidden: { opacity: 0, x: -20 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.5, ease: "easeOut", delay: i * 0.1 },
-  }),
-};
+import { fadeUp } from "@/lib/motion";
 
 const infoBlocks = [
   {
     label: "Email",
-    content: "hola@yimailife.com",
-    href: "mailto:hola@yimailife.com",
+    content: "info@yimailife.es",
+    href: "mailto:info@yimailife.es",
+  },
+  {
+    label: "Teléfono",
+    content: "655 54 15 20",
+    href: "tel:+34655541520",
   },
   {
     label: "Horario",
@@ -50,212 +38,208 @@ export default function Contacto() {
 
   return (
     <LazyMotion features={domAnimation}>
-    <main className="min-h-screen">
+      <main className="min-h-screen">
 
-      {/* ── Hero ── */}
-      <section className="px-6 pt-32 pb-16 max-w-2xl mx-auto">
-        <m.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0}
-          className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-6"
-        >
-          Contacto
-        </m.p>
-        <m.h1
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={1}
-          className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-6"
-        >
-          Hablemos.
-        </m.h1>
-        <m.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={2}
-          className="text-muted-foreground leading-relaxed"
-        >
-          ¿Tienes alguna pregunta sobre un pedido, un producto o simplemente
-          quieres saludarnos? Escríbenos y te respondemos en menos de 24 horas.
-        </m.p>
-      </section>
+        {/* ── Hero ── */}
+        <section className="px-6 pt-32 pb-16 max-w-2xl mx-auto">
+          <m.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0}
+            className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-6"
+          >
+            Contacto
+          </m.p>
+          <m.h1
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.15}
+            className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-6"
+          >
+            Hablemos.
+          </m.h1>
+          <m.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.3}
+            className="text-sm font-light leading-relaxed text-muted-foreground"
+          >
+            ¿Tienes alguna pregunta sobre un pedido, un producto o simplemente
+            quieres saludarnos? Escríbenos y te respondemos en menos de 24 horas.
+          </m.p>
+        </section>
 
-      <div className="w-full h-px bg-border" />
+        <div className="w-full h-px bg-border" />
 
-      {/* ── Info + Formulario ── */}
-      <div className="px-6 py-16 max-w-4xl mx-auto grid md:grid-cols-2 gap-16">
+        {/* ── Info + Formulario ── */}
+        <div className="px-6 py-16 max-w-4xl mx-auto grid md:grid-cols-2 gap-16">
 
-        {/* Bloque de información */}
-        <div className="space-y-10">
-          {infoBlocks.map((block, i) => (
-            <m.div
-              key={block.label}
-              variants={slideLeft}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={i}
-            >
-              <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">
-                {block.label}
-              </p>
-              {block.href ? (
-                <a
-                  href={block.href}
-                  className="text-sm hover:opacity-70 transition-opacity duration-200"
-                >
-                  {block.content}
-                </a>
-              ) : (
-                <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-                  {block.content}
+          {/* Bloque de información */}
+          <div className="space-y-10">
+            {infoBlocks.map((block, i) => (
+              <m.div
+                key={block.label}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                custom={i * 0.1}
+              >
+                <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">
+                  {block.label}
                 </p>
-              )}
-            </m.div>
-          ))}
-        </div>
+                {block.href ? (
+                  <a
+                    href={block.href}
+                    className="text-sm hover:opacity-70 transition-opacity duration-200"
+                  >
+                    {block.content}
+                  </a>
+                ) : (
+                  <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+                    {block.content}
+                  </p>
+                )}
+              </m.div>
+            ))}
+          </div>
 
-        {/* Formulario */}
-        <m.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          custom={0}
-        >
-          {sent ? (
-            <m.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="py-12"
-            >
-              <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">
-                Enviado
-              </p>
-              <p className="text-lg font-light">
-                Gracias por escribirnos.<br />
-                Te respondemos pronto.
-              </p>
-            </m.div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {[
-                { name: "name", label: "Nombre", type: "text", placeholder: "Tu nombre" },
-                { name: "email", label: "Email", type: "email", placeholder: "tu@email.com" },
-              ].map((field, i) => (
+          {/* Formulario */}
+          <div>
+            {sent ? (
+              <m.div
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+                custom={0}
+                className="py-12"
+              >
+                <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">
+                  Enviado
+                </p>
+                <p className="text-lg font-light">
+                  Gracias por escribirnos.<br />
+                  Te respondemos pronto.
+                </p>
+              </m.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {[
+                  { name: "name", label: "Nombre", type: "text", placeholder: "Tu nombre" },
+                  { name: "email", label: "Email", type: "email", placeholder: "tu@email.com" },
+                ].map((field, i) => (
+                  <m.div
+                    key={field.name}
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    custom={i * 0.1}
+                  >
+                    <label className="block text-xs tracking-[0.1em] uppercase text-muted-foreground mb-2">
+                      {field.label}
+                    </label>
+                    <input
+                      type={field.type}
+                      name={field.name}
+                      required
+                      value={form[field.name as keyof typeof form]}
+                      onChange={handleChange}
+                      className="w-full border-b border-border bg-transparent py-2 text-sm outline-none
+                                 focus:border-foreground transition-colors placeholder:text-muted-foreground/50"
+                      placeholder={field.placeholder}
+                    />
+                  </m.div>
+                ))}
+
                 <m.div
-                  key={field.name}
                   variants={fadeUp}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  custom={i * 0.1}
+                  custom={0.2}
                 >
                   <label className="block text-xs tracking-[0.1em] uppercase text-muted-foreground mb-2">
-                    {field.label}
+                    Mensaje
                   </label>
-                  <input
-                    type={field.type}
-                    name={field.name}
+                  <textarea
+                    name="message"
                     required
-                    value={form[field.name as keyof typeof form]}
+                    rows={5}
+                    value={form.message}
                     onChange={handleChange}
                     className="w-full border-b border-border bg-transparent py-2 text-sm outline-none
-                               focus:border-foreground transition-colors placeholder:text-muted-foreground/50"
-                    placeholder={field.placeholder}
+                               focus:border-foreground transition-colors placeholder:text-muted-foreground/50 resize-none"
+                    placeholder="¿En qué podemos ayudarte?"
                   />
                 </m.div>
-              ))}
 
-              <m.div
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                custom={0.2}
-              >
-                <label className="block text-xs tracking-[0.1em] uppercase text-muted-foreground mb-2">
-                  Mensaje
-                </label>
-                <textarea
-                  name="message"
-                  required
-                  rows={5}
-                  value={form.message}
-                  onChange={handleChange}
-                  className="w-full border-b border-border bg-transparent py-2 text-sm outline-none
-                             focus:border-foreground transition-colors placeholder:text-muted-foreground/50 resize-none"
-                  placeholder="¿En qué podemos ayudarte?"
-                />
-              </m.div>
-
-              <m.div
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                custom={0.3}
-              >
-                <button
-                  type="submit"
-                  className="text-xs tracking-[0.15em] uppercase border border-foreground px-8 py-3
-                             hover:bg-foreground hover:text-background transition-colors duration-200"
+                <m.div
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  custom={0.3}
                 >
-                  Enviar mensaje
-                </button>
-              </m.div>
-            </form>
-          )}
-        </m.div>
-      </div>
+                  <button
+                    type="submit"
+                    className="text-xs tracking-[0.15em] uppercase border border-foreground px-8 py-3
+                               hover:bg-foreground hover:text-background transition-colors duration-200"
+                  >
+                    Enviar mensaje
+                  </button>
+                </m.div>
+              </form>
+            )}
+          </div>
+        </div>
 
-      <div className="w-full h-px bg-border" />
+        <div className="w-full h-px bg-border" />
 
-      {/* ── Mapa (mock Google Maps embed) ── */}
-      <section className="px-6 py-16 max-w-4xl mx-auto">
-        <m.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mb-8"
-        >
-          <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">
-            Ubicación
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Calle Industria, 42 · 28001 Madrid, España
-          </p>
-        </m.div>
+        {/* ── Ubicación ── */}
+        <section className="px-6 py-16 max-w-4xl mx-auto">
+          <m.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            className="mb-8"
+          >
+            <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">
+              Ubicación
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Calle Industria, 42 · 28001 Madrid, España
+            </p>
+          </m.div>
 
-        <m.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          custom={0.1}
-          className="w-full overflow-hidden border border-border"
-          style={{ height: "380px" }}
-        >
-          <iframe
-            title="Ubicación YIMAILIFE"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.177777564899!2d-3.700346984581842!3d40.41654807936537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4228896e72bc45%3A0xedf2c71afc18a02a!2sMadrid%2C%20Spain!5e0!3m2!1sen!2ses!4v1697000000000!5m2!1sen!2ses"
-            width="100%"
-            height="100%"
-            style={{ border: 0, filter: "grayscale(100%) contrast(0.9) opacity(0.85)" }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </m.div>
-      </section>
+          <m.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0.1}
+            className="w-full overflow-hidden border border-border"
+            style={{ height: "380px" }}
+          >
+            <iframe
+              title="Ubicación YIMAILIFE"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.177777564899!2d-3.700346984581842!3d40.41654807936537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4228896e72bc45%3A0xedf2c71afc18a02a!2sMadrid%2C%20Spain!5e0!3m2!1sen!2ses!4v1697000000000!5m2!1sen!2ses"
+              width="100%"
+              height="100%"
+              style={{ border: 0, filter: "grayscale(100%) contrast(0.9) opacity(0.85)" }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </m.div>
+        </section>
 
-    </main>
+      </main>
     </LazyMotion>
   );
 }
