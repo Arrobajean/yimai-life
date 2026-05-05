@@ -3,13 +3,13 @@ import { useParams, Link } from "react-router-dom";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import { useCart } from "@/providers/CartProvider";
 import { Product } from "@/types/product";
+import { fadeUp } from "@/lib/motion";
 
-// ─── Mock data (mismo dataset que Catalogo) ────────────────────────────────────
 const MOCK_PRODUCTS = [
   {
     handle: "caja-kraft-biodegradable",
     title: "Caja Kraft Biodegradable",
-    collection: "Biodegradables",
+    collection: "Kraft & Takeaway",
     description:
       "Fabricada con fibra de kraft 100 % reciclada, esta caja es ideal para llevar alimentos calientes. Resistente a la grasa y a la humedad, mantiene la estructura incluso a temperaturas elevadas. Certificada para uso alimentario.",
     features: ["100 % reciclable", "Resistente a grasa y humedad", "Apta para microondas"],
@@ -24,7 +24,7 @@ const MOCK_PRODUCTS = [
   {
     handle: "contenedor-hermetico-500ml",
     title: "Contenedor Hermético 500 ml",
-    collection: "Envases Alimentarios",
+    collection: "Plástico & Aluminio",
     description:
       "Contenedor hermético de 500 ml con cierre de clip. Perfecto para ensaladas, sopas y platos fríos. Apto para lavavajillas y microondas. Fabricado en plástico reciclado libre de BPA.",
     features: ["Libre de BPA", "Apto para lavavajillas", "Cierre hermético de 4 clips"],
@@ -38,7 +38,7 @@ const MOCK_PRODUCTS = [
   {
     handle: "bandeja-compostable-l",
     title: "Bandeja Compostable L",
-    collection: "Biodegradables",
+    collection: "Sushi & Catering",
     description:
       "Bandeja de almidón de maíz compostable certificada según EN 13432. Se descompone en menos de 90 días en compostaje industrial. Ideal para supermercados y restaurantes que priorizan la sostenibilidad.",
     features: ["Compostable EN 13432", "Sin plásticos", "Apta para contacto con alimentos frescos"],
@@ -49,7 +49,7 @@ const MOCK_PRODUCTS = [
   {
     handle: "vaso-papel-250ml",
     title: "Vaso de Papel 250 ml",
-    collection: "Envases Alimentarios",
+    collection: "Accesorios",
     description:
       "Vaso de papel con recubrimiento interior de PE para bebidas calientes. Doble pared para mayor aislamiento térmico. Disponible sin impresión o con impresión personalizada a partir de 5 000 uds.",
     features: ["Doble pared aislante", "Compatible con tapas estándar", "Personalizable"],
@@ -60,7 +60,7 @@ const MOCK_PRODUCTS = [
   {
     handle: "caja-personalizada-logo",
     title: "Caja con Logo Personalizado",
-    collection: "Personalizados",
+    collection: "Personalización",
     description:
       "Caja de cartón microcorrugado con impresión digital de alta resolución. Mínimo 500 unidades. Posibilidad de acabados satinados, mate o con barniz selectivo. Entrega en 10 días hábiles.",
     features: ["Impresión digital 4+0", "Mínimo 500 uds.", "Acabados premium"],
@@ -75,7 +75,7 @@ const MOCK_PRODUCTS = [
   {
     handle: "tapa-transparente-universal",
     title: "Tapa Transparente Universal",
-    collection: "Envases Alimentarios",
+    collection: "Plástico & Aluminio",
     description:
       "Tapa de PET transparente compatible con la mayoría de contenedores redondos estándar del mercado. Permite ver el contenido del envase sin abrirlo. Apta para presentación en lineales de supermercado.",
     features: ["Compatible con envases estándar", "PET reciclado", "Cierre de presión"],
@@ -86,7 +86,7 @@ const MOCK_PRODUCTS = [
   {
     handle: "bolsa-papel-asas",
     title: "Bolsa de Papel con Asas",
-    collection: "Personalizados",
+    collection: "Personalización",
     description:
       "Bolsa de papel kraft con asas retorcidas de papel. Fondo reforzado para cargas de hasta 5 kg. Disponible natural o con impresión 1 tinta. Ideal para panadería, delicatessen y take-away.",
     features: ["Fondo reforzado", "Asas retorcidas resistentes", "Impresión opcional"],
@@ -97,7 +97,7 @@ const MOCK_PRODUCTS = [
   {
     handle: "contenedor-kraft-750ml",
     title: "Contenedor Kraft 750 ml",
-    collection: "Biodegradables",
+    collection: "Kraft & Takeaway",
     description:
       "Contenedor de fibra de kraft prensado. Sin plásticos en su composición. Apto para alimentos húmedos y grasos. Se puede introducir en el horno hasta 180 °C durante 20 minutos.",
     features: ["Sin plásticos", "Apto horno hasta 180 °C", "Biodegradable"],
@@ -108,7 +108,7 @@ const MOCK_PRODUCTS = [
   {
     handle: "bandeja-aluminio-rectangular",
     title: "Bandeja Aluminio Rectangular",
-    collection: "Envases Alimentarios",
+    collection: "Plástico & Aluminio",
     description:
       "Bandeja de aluminio de calibre grueso, reutilizable hasta 3 veces si se lava correctamente. Excelente conductor del calor para cocción uniforme. Apta para congelador, horno y vitrocerámica.",
     features: ["Apta para congelador y horno", "Reutilizable", "Reciclable 100 %"],
@@ -119,7 +119,7 @@ const MOCK_PRODUCTS = [
   {
     handle: "etiqueta-personalizada",
     title: "Etiqueta Personalizada",
-    collection: "Personalizados",
+    collection: "Personalización",
     description:
       "Etiqueta autoadhesiva impresa en papel o material sintético. Acabados gloss, mate o kraft. Apta para superficies irregulares y ambientes de humedad moderada. Adhesivo de calidad alimentaria.",
     features: ["Adhesivo apto alimentario", "Personalización total", "Mínimo 1 000 uds."],
@@ -130,7 +130,7 @@ const MOCK_PRODUCTS = [
   {
     handle: "vaso-biodegradable-cafe",
     title: "Vaso Biodegradable para Café",
-    collection: "Biodegradables",
+    collection: "Accesorios",
     description:
       "Vaso elaborado con papel certificado FSC y recubrimiento de PLA (ácido poliláctico) de origen vegetal. Compostable en planta de compostaje industrial. Resistente hasta 95 °C.",
     features: ["Certificado FSC", "Recubrimiento PLA vegetal", "Resistente a 95 °C"],
@@ -141,7 +141,7 @@ const MOCK_PRODUCTS = [
   {
     handle: "caja-pizza-kraft",
     title: "Caja Pizza Kraft",
-    collection: "Biodegradables",
+    collection: "Kraft & Takeaway",
     description:
       "Caja de pizza de cartón kraft ondulado. Canales de ventilación en la tapa para evitar condensación. Impresión 1 tinta incluida. La referencia del sector para pizzerías con consciencia ambiental.",
     features: ["Canales de ventilación", "Cartón ondulado resistente", "Impresión incluida"],
@@ -159,7 +159,6 @@ const formatPrice = (amount: string, currencyCode: string) =>
     parseFloat(amount)
   );
 
-// ─── Toast ─────────────────────────────────────────────────────────────────────
 function Toast({ visible }: { visible: boolean }) {
   return (
     <AnimatePresence>
@@ -180,21 +179,20 @@ function Toast({ visible }: { visible: boolean }) {
   );
 }
 
-// ─── Image carousel ────────────────────────────────────────────────────────────
 function ImageCarousel({ images }: { images: { url: string; altText: string }[] }) {
   const [active, setActive] = useState(0);
-
   const hasMultiple = images.length > 1;
 
   return (
-    <div className="flex flex-col gap-3">
+    <m.div
+      variants={fadeUp}
+      initial="hidden"
+      animate="visible"
+      custom={0}
+      className="flex flex-col gap-3"
+    >
       {/* Imagen principal */}
-      <m.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="aspect-square bg-secondary w-full overflow-hidden relative"
-      >
+      <div className="aspect-square bg-secondary w-full overflow-hidden relative">
         <AnimatePresence mode="wait">
           <m.div
             key={active}
@@ -220,7 +218,6 @@ function ImageCarousel({ images }: { images: { url: string; altText: string }[] 
           </m.div>
         </AnimatePresence>
 
-        {/* Flechas de navegación (solo si hay múltiples) */}
         {hasMultiple && (
           <>
             <button
@@ -245,9 +242,8 @@ function ImageCarousel({ images }: { images: { url: string; altText: string }[] 
             </button>
           </>
         )}
-      </m.div>
+      </div>
 
-      {/* Miniaturas (solo si hay múltiples imágenes) */}
       {hasMultiple && (
         <div className="flex gap-2 overflow-x-auto pb-1">
           {images.map((img, i) => (
@@ -272,11 +268,10 @@ function ImageCarousel({ images }: { images: { url: string; altText: string }[] 
           ))}
         </div>
       )}
-    </div>
+    </m.div>
   );
 }
 
-// ─── Page ──────────────────────────────────────────────────────────────────────
 export default function ProductDetail() {
   const { handle } = useParams<{ handle: string }>();
   const product = MOCK_PRODUCTS.find((p) => p.handle === handle);
@@ -305,7 +300,7 @@ export default function ProductDetail() {
         id: productId,
         title: variantTitle,
         price: parseFloat(product.priceRange.minVariantPrice.amount),
-      }
+      },
     };
 
     addToCart(productItem, qty);
@@ -351,27 +346,24 @@ export default function ProductDetail() {
         {/* Producto */}
         <section className="px-6 py-10 max-w-5xl mx-auto grid md:grid-cols-2 gap-12 lg:gap-20 items-start">
 
-          {/* Carrusel de imágenes */}
           <ImageCarousel images={product.images} />
 
           {/* Info */}
           <m.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.05 }}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.1}
             className="flex flex-col gap-6"
           >
-            {/* Colección */}
             <p className="text-xs tracking-[0.18em] uppercase text-muted-foreground">
               {product.collection}
             </p>
 
-            {/* Nombre */}
             <h1 className="text-3xl md:text-4xl font-light leading-tight tracking-tight">
               {product.title}
             </h1>
 
-            {/* Precio */}
             <p className="text-xl font-light">
               {formatPrice(price.amount, price.currencyCode)}
               <span className="ml-2 text-sm text-muted-foreground">/ ud.</span>
@@ -379,12 +371,10 @@ export default function ProductDetail() {
 
             <div className="w-full h-px bg-border" />
 
-            {/* Descripción */}
             <p className="text-sm text-muted-foreground leading-relaxed">
               {product.description}
             </p>
 
-            {/* Características */}
             <ul className="flex flex-col gap-2">
               {product.features.map((f) => (
                 <li key={f} className="flex items-center gap-3 text-sm">
