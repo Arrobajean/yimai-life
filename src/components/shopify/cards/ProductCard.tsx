@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { LazyMotion, domAnimation, m } from "framer-motion";
+import { m } from "framer-motion";
+import { cardReveal } from "@/lib/motion";
 
 interface ProductCardProps {
   handle: string;
@@ -16,11 +17,6 @@ const formatPrice = (amount: string, currencyCode: string) =>
     parseFloat(amount)
   );
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
-};
-
 export function ProductCard({
   handle,
   title,
@@ -30,8 +26,7 @@ export function ProductCard({
   onAddToCart,
 }: ProductCardProps) {
   return (
-    <LazyMotion features={domAnimation}>
-    <m.div variants={cardVariants} className="group flex flex-col">
+    <m.div variants={cardReveal} className="group flex flex-col">
       {/* Imagen */}
       <Link to={`/product/${handle}`} className="block">
         <div className="aspect-square overflow-hidden bg-secondary mb-3">
@@ -74,6 +69,5 @@ export function ProductCard({
         Añadir al carrito
       </button>
     </m.div>
-    </LazyMotion>
   );
 }

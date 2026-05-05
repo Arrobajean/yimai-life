@@ -17,6 +17,9 @@ export interface Product {
   specifications?: Record<string, string>;
   features?: string[];
   tags?: string[];
+  sku?: string;
+  boxUnits?: string;
+  variants?: string[];
   variant?: {
     id: string;
     title: string;

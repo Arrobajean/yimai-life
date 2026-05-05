@@ -4,107 +4,16 @@ import { m, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import { ProductCard } from "@/components/shopify/cards/ProductCard";
 import { useCart } from "@/providers/CartProvider";
 import { Product } from "@/types/product";
-import { fadeUp } from "@/lib/motion";
+import { fadeUp, dividerLine } from "@/lib/motion";
+import { MOCK_PRODUCTS, MOCK_COLLECTIONS } from "@/data/products";
 
-const MOCK_COLLECTIONS = [
-  { handle: "kraft-takeaway",    title: "Kraft & Takeaway" },
-  { handle: "sushi-catering",    title: "Sushi & Catering" },
-  { handle: "plastico-aluminio", title: "Plástico & Aluminio" },
-  { handle: "accesorios",        title: "Accesorios" },
-  { handle: "personalizacion",   title: "Personalización" },
-];
-
-const MOCK_PRODUCTS = [
-  {
-    handle: "caja-kraft-biodegradable",
-    title: "Caja Kraft Biodegradable",
-    collection: "kraft-takeaway",
-    images: { edges: [{ node: { url: "", altText: "Caja Kraft" } }] },
-    priceRange: { minVariantPrice: { amount: "0.45", currencyCode: "EUR" } },
-  },
-  {
-    handle: "contenedor-hermetico-500ml",
-    title: "Contenedor Hermético 500 ml",
-    collection: "plastico-aluminio",
-    images: { edges: [{ node: { url: "", altText: "Contenedor hermético" } }] },
-    priceRange: { minVariantPrice: { amount: "0.89", currencyCode: "EUR" } },
-  },
-  {
-    handle: "bandeja-compostable-l",
-    title: "Bandeja Compostable L",
-    collection: "sushi-catering",
-    images: { edges: [{ node: { url: "", altText: "Bandeja compostable" } }] },
-    priceRange: { minVariantPrice: { amount: "0.62", currencyCode: "EUR" } },
-  },
-  {
-    handle: "vaso-papel-250ml",
-    title: "Vaso de Papel 250 ml",
-    collection: "accesorios",
-    images: { edges: [{ node: { url: "", altText: "Vaso de papel" } }] },
-    priceRange: { minVariantPrice: { amount: "0.18", currencyCode: "EUR" } },
-  },
-  {
-    handle: "caja-personalizada-logo",
-    title: "Caja con Logo Personalizado",
-    collection: "personalizacion",
-    images: { edges: [{ node: { url: "", altText: "Caja personalizada" } }] },
-    priceRange: { minVariantPrice: { amount: "1.20", currencyCode: "EUR" } },
-  },
-  {
-    handle: "tapa-transparente-universal",
-    title: "Tapa Transparente Universal",
-    collection: "plastico-aluminio",
-    images: { edges: [{ node: { url: "", altText: "Tapa transparente" } }] },
-    priceRange: { minVariantPrice: { amount: "0.22", currencyCode: "EUR" } },
-  },
-  {
-    handle: "bolsa-papel-asas",
-    title: "Bolsa de Papel con Asas",
-    collection: "personalizacion",
-    images: { edges: [{ node: { url: "", altText: "Bolsa de papel" } }] },
-    priceRange: { minVariantPrice: { amount: "0.35", currencyCode: "EUR" } },
-  },
-  {
-    handle: "contenedor-kraft-750ml",
-    title: "Contenedor Kraft 750 ml",
-    collection: "kraft-takeaway",
-    images: { edges: [{ node: { url: "", altText: "Contenedor kraft" } }] },
-    priceRange: { minVariantPrice: { amount: "0.78", currencyCode: "EUR" } },
-  },
-  {
-    handle: "bandeja-aluminio-rectangular",
-    title: "Bandeja Aluminio Rectangular",
-    collection: "plastico-aluminio",
-    images: { edges: [{ node: { url: "", altText: "Bandeja aluminio" } }] },
-    priceRange: { minVariantPrice: { amount: "0.55", currencyCode: "EUR" } },
-  },
-  {
-    handle: "etiqueta-personalizada",
-    title: "Etiqueta Personalizada",
-    collection: "personalizacion",
-    images: { edges: [{ node: { url: "", altText: "Etiqueta personalizada" } }] },
-    priceRange: { minVariantPrice: { amount: "0.08", currencyCode: "EUR" } },
-  },
-  {
-    handle: "vaso-biodegradable-cafe",
-    title: "Vaso Biodegradable para Café",
-    collection: "accesorios",
-    images: { edges: [{ node: { url: "", altText: "Vaso biodegradable" } }] },
-    priceRange: { minVariantPrice: { amount: "0.24", currencyCode: "EUR" } },
-  },
-  {
-    handle: "caja-pizza-kraft",
-    title: "Caja Pizza Kraft",
-    collection: "kraft-takeaway",
-    images: { edges: [{ node: { url: "", altText: "Caja pizza kraft" } }] },
-    priceRange: { minVariantPrice: { amount: "0.95", currencyCode: "EUR" } },
-  },
-];
-
-// Fade for the grid container on collection switch
+// Grid container: fades in and staggers child cards on collection switch
 const gridVariants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.3, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.2, staggerChildren: 0.06, delayChildren: 0.05 },
+  },
 };
 
 function Toast({ visible }: { visible: boolean }) {
@@ -151,6 +60,8 @@ export default function Catalogo() {
       image: raw.images.edges[0]?.node.url || "",
       category: raw.collection,
       inStock: true,
+      sku: raw.sku,
+      boxUnits: raw.boxUnits,
     };
 
     addToCart(product, 1);
@@ -220,7 +131,14 @@ export default function Catalogo() {
           </m.div>
         </section>
 
-        <div className="w-full h-px bg-border" />
+        <m.div
+          variants={dividerLine}
+          initial="hidden"
+          animate="visible"
+          custom={0.45}
+          style={{ originX: 0 }}
+          className="w-full h-px bg-border"
+        />
 
         {/* Grid de productos */}
         <section className="px-6 py-12 max-w-7xl mx-auto">
