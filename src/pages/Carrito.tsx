@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { LazyMotion, domAnimation, m, AnimatePresence, Variants } from "framer-motion";
 import { useCart } from "@/providers/CartProvider";
-import { fadeUp } from "@/lib/motion";
+import { fadeUp, dividerLine } from "@/lib/motion";
 
 const formatPrice = (amount: number, currency = "EUR") =>
   new Intl.NumberFormat("es-ES", { style: "currency", currency }).format(amount);
@@ -51,7 +51,14 @@ export default function Carrito() {
           </m.h1>
         </section>
 
-        <div className="w-full h-px bg-border" />
+        <m.div
+          variants={dividerLine}
+          initial="hidden"
+          animate="visible"
+          custom={0.3}
+          style={{ originX: 0 }}
+          className="w-full h-px bg-border"
+        />
 
         {isEmpty ? (
           /* ── Carrito vacío ── */
@@ -69,7 +76,7 @@ export default function Carrito() {
               <Link
                 to="/catalogo"
                 className="text-xs tracking-[0.15em] uppercase border border-foreground px-8 py-3
-                           hover:bg-foreground hover:text-background transition-colors duration-200 inline-block"
+                           hover:bg-[#1E4D2B] hover:border-[#1E4D2B] hover:text-white transition-colors duration-200 inline-block"
               >
                 Explorar catálogo
               </Link>
@@ -190,7 +197,7 @@ export default function Carrito() {
                 <Link
                   to="/catalogo"
                   className="text-xs tracking-[0.12em] uppercase text-muted-foreground
-                             hover:text-foreground transition-colors duration-200"
+                             hover:text-[#D4541A] transition-colors duration-200"
                 >
                   ← Seguir comprando
                 </Link>
@@ -237,7 +244,7 @@ export default function Carrito() {
               <button
                 onClick={handleCheckout}
                 className="w-full text-xs tracking-[0.15em] uppercase bg-foreground text-background
-                           py-3 hover:opacity-80 transition-opacity duration-200"
+                           py-3 hover:bg-[#1E4D2B] transition-colors duration-200"
               >
                 Ir al checkout →
               </button>

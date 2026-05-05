@@ -1,6 +1,6 @@
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { Leaf, ShieldCheck, Package, Users, Award, BadgeCheck, Palette } from "lucide-react";
-import { fadeUp, iconHover } from "@/lib/motion";
+import { fadeUp, iconHover, dividerLine } from "@/lib/motion";
 
 const pillars = [
   {
@@ -96,7 +96,14 @@ export default function QuienesSomos() {
           </m.p>
         </section>
 
-        <div className="w-full h-px bg-border" />
+        <m.div
+          variants={dividerLine}
+          initial="hidden"
+          animate="visible"
+          custom={0.45}
+          style={{ originX: 0 }}
+          className="w-full h-px bg-border"
+        />
 
         {/* ── Por qué elegirnos ── */}
         <section className="px-6 py-28 max-w-5xl mx-auto text-center">
@@ -135,7 +142,15 @@ export default function QuienesSomos() {
           </div>
         </section>
 
-        <div className="w-full h-px bg-border" />
+        <m.div
+          variants={dividerLine}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          custom={0}
+          style={{ originX: 0 }}
+          className="w-full h-px bg-border"
+        />
 
         {/* ── Misión ── */}
         <section className="px-6 py-28 max-w-3xl mx-auto text-center">
@@ -163,7 +178,15 @@ export default function QuienesSomos() {
           </m.p>
         </section>
 
-        <div className="w-full h-px bg-border" />
+        <m.div
+          variants={dividerLine}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          custom={0}
+          style={{ originX: 0 }}
+          className="w-full h-px bg-border"
+        />
 
         {/* ── Innovación ── */}
         <section className="px-6 py-28 max-w-3xl mx-auto text-center">
@@ -191,7 +214,15 @@ export default function QuienesSomos() {
           </m.p>
         </section>
 
-        <div className="w-full h-px bg-border" />
+        <m.div
+          variants={dividerLine}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          custom={0}
+          style={{ originX: 0 }}
+          className="w-full h-px bg-border"
+        />
 
         {/* ── Compromisos ── */}
         <section className="px-6 py-28 max-w-5xl mx-auto text-center">
@@ -230,7 +261,15 @@ export default function QuienesSomos() {
           </div>
         </section>
 
-        <div className="w-full h-px bg-border" />
+        <m.div
+          variants={dividerLine}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          custom={0}
+          style={{ originX: 0 }}
+          className="w-full h-px bg-border"
+        />
 
         {/* ── Tagline Final ── */}
         <section className="px-6 py-32 max-w-3xl mx-auto text-center">

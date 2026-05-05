@@ -4,28 +4,43 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84% 60%;
+    /* ─── shadcn-ui / Tailwind tokens ──────────────────────────────── */
+    --background:             0 0% 100%;
+    --foreground:             0 0% 9%;
+    --card:                   0 0% 100%;
+    --card-foreground:        0 0% 9%;
+    --popover:                0 0% 100%;
+    --popover-foreground:     0 0% 9%;
+    --primary:                0 0% 9%;
+    --primary-foreground:     0 0% 98%;
+    --secondary:              0 0% 96%;
+    --secondary-foreground:   0 0% 9%;
+    --muted:                  0 0% 96%;
+    --muted-foreground:       0 0% 45%;
+    --accent:                 0 0% 96%;
+    --accent-foreground:      0 0% 9%;
+    --destructive:            0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 9%;
-    --radius: 0.25rem;
-  }
+    --border:                 0 0% 90%;
+    --input:                  0 0% 90%;
+    --ring:                   0 0% 9%;
+    --radius:                 0.25rem;
 
+    /* ─── Yimailife — Paleta de marca ───────────────────────────────── */
+    --color-verde-oscuro:  #1E4D2B;
+    --color-verde-medio:   #2E7D3E;
+    --color-naranja:       #D4541A;
+    --color-texto:         #1A1A2A;
+    --color-texto-suave:   #6B7B6E;
+
+    --bg-blanco-palido:    #F5F4F2;
+    --bg-verde-palido:     #EAF2EC;
+    --bg-naranja-palido:   #FBF0EB;
+    --bg-oscuro:           #1A1A2A;
+
+    --border-verde:        #C0D8C4;
+    --border-naranja:      #F0D8CC;
+  }
 }
 
 @layer base {
@@ -34,6 +49,104 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    background: var(--bg-blanco-palido);
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  nav a {
+    color: var(--color-texto);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  nav a:hover {
+    color: var(--color-verde-medio);
+  }
+}
+
+@layer components {
+  /* ─── Fondos de sección ─────────────────────────────────────────── */
+  .section-default {
+    background: var(--bg-blanco-palido);
+  }
+  .section-green {
+    background: var(--bg-verde-palido);
+    border-top: 0.5px solid var(--border-verde);
+    border-bottom: 0.5px solid var(--border-verde);
+  }
+  .section-cta {
+    background: var(--bg-blanco-palido);
+  }
+  .section-dark {
+    background: var(--bg-oscuro);
+    color: #F5F5F0;
+  }
+
+  /* ─── Botones ───────────────────────────────────────────────────── */
+  .btn-primary {
+    background: var(--color-verde-oscuro);
+    color: #F5F5F0;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .btn-primary:hover {
+    background: var(--color-verde-medio);
+  }
+
+  .btn-cta {
+    background: var(--color-naranja);
+    color: #F5F5F0;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .btn-cta:hover {
+    background: #B84312;
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--color-verde-oscuro);
+    border: 1px solid var(--color-verde-oscuro);
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .btn-outline:hover {
+    background: var(--color-verde-oscuro);
+    color: #F5F5F0;
+  }
+
+  /* ─── Links de catálogo ─────────────────────────────────────────── */
+  .catalog-link {
+    color: var(--color-texto);
+    border-bottom: 0.5px solid var(--border-verde);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .catalog-link:hover {
+    color: var(--color-verde-oscuro);
+    border-bottom-color: var(--color-verde-oscuro);
+  }
+}
+
+/* ─── View transitions ──────────────────────────────────────────────── */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 0.25s;
+  animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
 }

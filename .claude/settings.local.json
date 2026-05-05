@@ -8,7 +8,10 @@
       "Bash(where mutool *)",
       "Bash(pip list *)",
       "Bash(findstr -i pdf)",
-      "Bash(pdftotext \"C:\\\\Users\\\\jeanc\\\\OneDrive\\\\Documentos\\\\Workspace\\\\yimailife\\\\documentos\\\\B. catalogo a4 单页 sin precio.pdf\" -)"
+      "Bash(pdftotext \"C:\\\\Users\\\\jeanc\\\\OneDrive\\\\Documentos\\\\Workspace\\\\yimailife\\\\documentos\\\\B. catalogo a4 单页 sin precio.pdf\" -)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\jeanc\\\\OneDrive\\\\Documentos\\\\Workspace\\\\yimailife\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "Bash(npx tsc *)"
     ]
   }
 }

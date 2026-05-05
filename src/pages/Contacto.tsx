@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { LazyMotion, domAnimation, m } from "framer-motion";
-import { fadeUp } from "@/lib/motion";
+import { fadeUp, dividerLine } from "@/lib/motion";
 
 const infoBlocks = [
   {
@@ -72,7 +72,14 @@ export default function Contacto() {
           </m.p>
         </section>
 
-        <div className="w-full h-px bg-border" />
+        <m.div
+          variants={dividerLine}
+          initial="hidden"
+          animate="visible"
+          custom={0.45}
+          style={{ originX: 0 }}
+          className="w-full h-px bg-border"
+        />
 
         {/* ── Info + Formulario ── */}
         <div className="px-6 py-16 max-w-4xl mx-auto grid md:grid-cols-2 gap-16">
@@ -187,7 +194,7 @@ export default function Contacto() {
                   <button
                     type="submit"
                     className="text-xs tracking-[0.15em] uppercase border border-foreground px-8 py-3
-                               hover:bg-foreground hover:text-background transition-colors duration-200"
+                               hover:bg-[#1E4D2B] hover:border-[#1E4D2B] hover:text-white transition-colors duration-200"
                   >
                     Enviar mensaje
                   </button>
@@ -197,7 +204,15 @@ export default function Contacto() {
           </div>
         </div>
 
-        <div className="w-full h-px bg-border" />
+        <m.div
+          variants={dividerLine}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          custom={0}
+          style={{ originX: 0 }}
+          className="w-full h-px bg-border"
+        />
 
         {/* ── Ubicación ── */}
         <section className="px-6 py-16 max-w-4xl mx-auto">
