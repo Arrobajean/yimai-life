@@ -163,13 +163,13 @@ export default function Catalogo() {
       <Toast visible={toastVisible} />
 
       <main className="min-h-screen">
-        <section className="px-6 pt-32 pb-10 max-w-7xl mx-auto">
+        <section className="px-6 pt-40 pb-20 max-w-7xl mx-auto text-center">
           <m.p
             variants={fadeUp}
             initial="hidden"
             animate="visible"
             custom={0}
-            className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4"
+            className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-6"
           >
             Catálogo
           </m.p>
@@ -185,17 +185,17 @@ export default function Catalogo() {
         </section>
 
         {/* Filtros por colección */}
-        <section className="px-6 pb-8 max-w-7xl mx-auto">
+        <section className="px-6 pb-12 max-w-7xl mx-auto">
           <m.div
             variants={fadeUp}
             initial="hidden"
             animate="visible"
             custom={0.3}
-            className="flex flex-wrap gap-2"
+            className="flex flex-wrap justify-center gap-2"
           >
             <button
               onClick={() => setActiveCollection(null)}
-              className={`text-xs tracking-[0.1em] uppercase px-4 py-2 border transition-colors duration-200 ${
+              className={`text-[10px] tracking-[0.15em] uppercase px-6 py-2.5 border transition-all duration-200 ${
                 activeCollection === null
                   ? "bg-foreground text-background border-foreground"
                   : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
@@ -208,7 +208,7 @@ export default function Catalogo() {
               <button
                 key={col.handle}
                 onClick={() => setActiveCollection(col.handle)}
-                className={`text-xs tracking-[0.1em] uppercase px-4 py-2 border transition-colors duration-200 ${
+                className={`text-[10px] tracking-[0.15em] uppercase px-6 py-2.5 border transition-all duration-200 ${
                   activeCollection === col.handle
                     ? "bg-foreground text-background border-foreground"
                     : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
