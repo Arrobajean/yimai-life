@@ -41,7 +41,7 @@ export default function Contacto() {
       <main className="min-h-screen">
 
         {/* ── Hero ── */}
-        <section className="px-6 pt-32 pb-16 max-w-2xl mx-auto">
+        <section className="px-6 pt-40 pb-24 max-w-4xl mx-auto text-center">
           <m.p
             variants={fadeUp}
             initial="hidden"
@@ -56,7 +56,7 @@ export default function Contacto() {
             initial="hidden"
             animate="visible"
             custom={0.15}
-            className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-6"
+            className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-8"
           >
             Hablemos.
           </m.h1>
@@ -65,7 +65,7 @@ export default function Contacto() {
             initial="hidden"
             animate="visible"
             custom={0.3}
-            className="text-sm font-light leading-relaxed text-muted-foreground"
+            className="text-sm font-light leading-relaxed text-muted-foreground max-w-lg mx-auto"
           >
             ¿Tienes alguna pregunta sobre un pedido, un producto o simplemente
             quieres saludarnos? Escríbenos y te respondemos en menos de 24 horas.

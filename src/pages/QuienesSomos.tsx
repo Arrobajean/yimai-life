@@ -64,13 +64,13 @@ export default function QuienesSomos() {
       <main className="min-h-screen">
 
         {/* ── Hero ── */}
-        <section className="px-6 pt-32 pb-24 max-w-3xl mx-auto text-center">
+        <section className="px-6 pt-40 pb-24 max-w-4xl mx-auto text-center">
           <m.p
             variants={fadeUp}
             initial="hidden"
             animate="visible"
             custom={0}
-            className="text-xs tracking-[0.25em] uppercase text-muted-foreground mb-8"
+            className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-6"
           >
             Nosotros
           </m.p>
@@ -79,7 +79,7 @@ export default function QuienesSomos() {
             initial="hidden"
             animate="visible"
             custom={0.15}
-            className="text-5xl md:text-6xl font-light leading-[1.1] tracking-tight mb-10"
+            className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-8"
           >
             Sobre Nosotros
           </m.h1>
