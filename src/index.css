@@ -1,3 +1,4 @@
+@import "./components/admin/editor/editor.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -5,8 +5,10 @@ import { useCart } from "@/providers/CartProvider";
 
 const navLinks = [
   { to: "/catalogo", label: "Catálogo" },
+  { to: "/blog", label: "Blog" },
   { to: "/nosotros", label: "Nosotros" },
   { to: "/contacto", label: "Contacto" },
+  { to: "/admin/blog", label: "Admin" },
 ];
 
 // Icono carrito SVG
