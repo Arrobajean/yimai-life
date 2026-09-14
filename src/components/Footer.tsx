@@ -88,7 +88,7 @@ export default function Footer() {
           <p className="text-xs text-muted-foreground/50">
             Sitio desarrollado por{" "}
             <a
-              href="https://www.404studios.digital"
+              href="https://www.404studios.es"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-foreground transition-colors duration-200"
