@@ -9,6 +9,10 @@ import Catalogo from "./pages/Catalogo";
 import Contacto from "./pages/Contacto";
 import ProductDetail from "./pages/ProductDetail";
 import Carrito from "./pages/Carrito";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import AdminBlogList from "./pages/admin/AdminBlogList";
+import AdminBlogEditorPage from "./pages/admin/AdminBlogEditorPage";
 
 export default function App() {
   return (
@@ -31,6 +35,15 @@ export default function App() {
           <Route path="/carrito" element={<Carrito />} />
           <Route path="/nosotros" element={<QuienesSomos />} />
           <Route path="/contacto" element={<Contacto />} />
+
+          {/* Rutas Públicas de Blog */}
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+
+          {/* Rutas de Administración con TipTap v3 Full Suite */}
+          <Route path="/admin/blog" element={<AdminBlogList />} />
+          <Route path="/admin/blog/new" element={<AdminBlogEditorPage />} />
+          <Route path="/admin/blog/edit/:id" element={<AdminBlogEditorPage />} />
         </Routes>
       </div>
 
