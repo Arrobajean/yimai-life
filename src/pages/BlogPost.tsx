@@ -97,14 +97,16 @@ export default function BlogPost() {
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            <Link
-              to={`/admin/blog/edit/${post.id}`}
-              className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#1E4D2B] bg-[#EAF2EC] hover:bg-[#C0D8C4]/60 px-2.5 py-1 rounded-md transition-colors"
-              title="Editar en panel admin"
-            >
-              <Edit3 className="w-3 h-3" />
-              <span className="hidden sm:inline">Editar Artículo</span>
-            </Link>
+            {import.meta.env.VITE_ENABLE_ADMIN_DEMO === "true" && (
+              <Link
+                to={`/admin/blog/edit/${post.id}`}
+                className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#1E4D2B] bg-[#EAF2EC] hover:bg-[#C0D8C4]/60 px-2.5 py-1 rounded-md transition-colors"
+                title="Editar en panel admin (demo local)"
+              >
+                <Edit3 className="w-3 h-3" />
+                <span className="hidden sm:inline">Editar Artículo</span>
+              </Link>
+            )}
           </div>
         </div>
       </div>

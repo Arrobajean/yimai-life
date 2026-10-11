@@ -25,3 +25,7 @@ dist-ssr
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Higiene S5: material del cliente y ajustes locales fuera del repo publico
+documentos/
+.claude/

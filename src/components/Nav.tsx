@@ -3,12 +3,16 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/providers/CartProvider";
 
+const ADMIN_DEMO_ENABLED =
+  import.meta.env.VITE_ENABLE_ADMIN_DEMO === "true";
+
 const navLinks = [
   { to: "/catalogo", label: "Catálogo" },
   { to: "/blog", label: "Blog" },
   { to: "/nosotros", label: "Nosotros" },
   { to: "/contacto", label: "Contacto" },
-  { to: "/admin/blog", label: "Admin" },
+  // El panel del blog es una demo local sin backend: no se enlaza en prod.
+  ...(ADMIN_DEMO_ENABLED ? [{ to: "/admin/blog", label: "Admin" }] : []),
 ];
 
 // Icono carrito SVG
