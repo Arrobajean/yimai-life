@@ -6,8 +6,6 @@
 export interface ShopifyConfig {
   storeDomain: string;
   storefrontAccessToken: string;
-  apiKey: string;
-  apiSecret: string;
   apiVersion: string;
   environment: "development" | "production";
   enableMock: boolean;
@@ -33,8 +31,9 @@ export class ShopifyConfigManager {
       storeDomain: import.meta.env.VITE_SHOPIFY_STORE_DOMAIN || "",
       storefrontAccessToken:
         import.meta.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN || "",
-      apiKey: import.meta.env.VITE_SHOPIFY_API_KEY || "",
-      apiSecret: import.meta.env.VITE_SHOPIFY_API_SECRET || "",
+      // NOTA (S5): el Storefront solo necesita dominio + token publico.
+      // VITE_SHOPIFY_API_KEY/SECRET eliminados: un secreto con prefijo VITE_
+      // acabaria en el bundle del cliente. Nada de Admin API en el frontend.
       apiVersion: import.meta.env.VITE_SHOPIFY_API_VERSION || "2024-10",
       environment:
         (import.meta.env.VITE_SHOPIFY_ENVIRONMENT as
@@ -68,14 +67,6 @@ export class ShopifyConfigManager {
 
     if (!this.config.storefrontAccessToken) {
       errors.push("VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN is required");
-    }
-
-    if (!this.config.apiKey) {
-      errors.push("VITE_SHOPIFY_API_KEY is required");
-    }
-
-    if (!this.config.apiSecret) {
-      errors.push("VITE_SHOPIFY_API_SECRET is required");
     }
 
     if (!this.config.apiVersion) {

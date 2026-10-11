@@ -13,6 +13,13 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import AdminBlogList from "./pages/admin/AdminBlogList";
 import AdminBlogEditorPage from "./pages/admin/AdminBlogEditorPage";
+import NotFound from "./pages/NotFound";
+
+// Demo honesta (D3=A): el panel /admin/blog* es una demo local sin backend
+// ni autenticacion. Solo se monta si VITE_ENABLE_ADMIN_DEMO === 'true'
+// (desarrollo local). En produccion esas URLs caen al 404.
+const ADMIN_DEMO_ENABLED =
+  import.meta.env.VITE_ENABLE_ADMIN_DEMO === "true";
 
 export default function App() {
   return (
@@ -40,10 +47,24 @@ export default function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
 
-          {/* Rutas de Administración con TipTap v3 Full Suite */}
-          <Route path="/admin/blog" element={<AdminBlogList />} />
-          <Route path="/admin/blog/new" element={<AdminBlogEditorPage />} />
-          <Route path="/admin/blog/edit/:id" element={<AdminBlogEditorPage />} />
+          {/* Rutas de demostracion local del editor (TipTap). Sin backend:
+              los posts viven en localStorage del navegador. */}
+          {ADMIN_DEMO_ENABLED ? (
+            <>
+              <Route path="/admin/blog" element={<AdminBlogList />} />
+              <Route path="/admin/blog/new" element={<AdminBlogEditorPage />} />
+              <Route
+                path="/admin/blog/edit/:id"
+                element={<AdminBlogEditorPage />}
+              />
+            </>
+          ) : (
+            <>
+              <Route path="/admin/blog" element={<NotFound />} />
+              <Route path="/admin/blog/new" element={<NotFound />} />
+              <Route path="/admin/blog/edit/:id" element={<NotFound />} />
+            </>
+          )}
         </Routes>
       </div>
 
